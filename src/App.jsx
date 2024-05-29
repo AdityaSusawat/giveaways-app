@@ -92,10 +92,14 @@ function App() {
                       className="cursor-pointer content-center"
                       onClick={() => handleQuestion(item.id)}
                     >
-                      <QuestionSVG color="#97E333" size="32" className="" />
+                      <QuestionSVG
+                        color="#97E333"
+                        size="32"
+                        className="hidden md:flex"
+                      />
                     </div>
                   </div>
-                  <div className="font-bold text-2xl">
+                  <div className="hidden md:flex font-bold text-2xl">
                     {item.worth === "N/A" ? "" : item.worth}
                   </div>
                 </div>
