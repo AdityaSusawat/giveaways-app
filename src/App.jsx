@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import QuestionSVG from "./assets/QuestionSVG";
+import Modal from "./components/Modal";
 
 function App() {
   const [data, setData] = useState([]);
@@ -7,6 +9,9 @@ function App() {
 
   const [displayedItems, setDisplayedItems] = useState([]);
   const [loadMore, setLoadMore] = useState(20);
+
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
 
   const url = "https://gamerpower.p.rapidapi.com/api/giveaways";
   const options = {
@@ -40,33 +45,15 @@ function App() {
     }
   }, [data, loadMore]);
 
-  // const handleScroll = () => {
-  //   if (
-  //     window.innerHeight + document.documentElement.scrollTop !==
-  //     document.documentElement.offsetHeight
-  //   ) {
-  //     return;
-  //   }
-  //   setLoadMore((prev) => prev + 10);
-  // };
-
-  // const handleScroll = () => {
-  //   if (
-  //     window.innerHeight + document.documentElement.scrollTop >=
-  //     document.documentElement.offsetHeight - 1
-  //   ) {
-  //     setLoadMore((prev) => prev + 10);
-  //   }
-  // };
-
   const handleLoadMore = () => {
     setLoadMore((prev) => prev + 10);
   };
 
-  // useEffect(() => {
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, []);
+  const handleQuestion = (id) => {
+    const item = data.find((item) => item.id === id);
+    setModalContent(item);
+    setShowModal(true);
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-900 text-gray-100">
@@ -80,26 +67,34 @@ function App() {
           {displayedItems.map((item) => (
             <div
               key={item.id}
-              className="border-2 border-gray-700 flex flex-col h-72 bg-gray-800 rounded-lg shadow-lg"
+              className="border-2 border-gray-700 flex flex-col h-96 md:h-72 bg-gray-800 rounded-lg shadow-lg"
             >
-              <div className="h-[60%]">
+              <div className="h-[50%]">
                 <img
                   src={item.image}
                   alt={`img${item.id}`}
-                  className="w-full h-full object-cover rounded-t-lg"
+                  className="w-full h-full rounded-t-lg"
                 />
               </div>
-              <div className="h-[40%] flex flex-col justify-between p-2">
+              <div className="h-full flex flex-col justify-between p-2">
                 <div className="font-medium">{item.title}</div>
-                <div className="flex justify-between items-center">
-                  <a
-                    href={item.open_giveaway_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-blue-500 hover:bg-blue-700 p-1 pr-2 pl-2 rounded-sm text-lg text-white transition-colors duration-200"
-                  >
-                    CLAIM
-                  </a>
+                <div className="flex justify-between items-center mb-3 pr-2 pl-2">
+                  <div className="flex gap-x-4">
+                    <a
+                      href={item.open_giveaway_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-blue-500 hover:bg-blue-700 p-1 pr-2 pl-2 rounded-sm text-lg text-white transition-colors duration-200"
+                    >
+                      CLAIM
+                    </a>
+                    <div
+                      className="cursor-pointer content-center"
+                      onClick={() => handleQuestion(item.id)}
+                    >
+                      <QuestionSVG color="#97E333" size="32" className="" />
+                    </div>
+                  </div>
                   <div className="font-bold text-2xl">
                     {item.worth === "N/A" ? "" : item.worth}
                   </div>
@@ -119,6 +114,11 @@ function App() {
           </div>
         )}
       </div>
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        item={modalContent}
+      />
     </div>
   );
 }
