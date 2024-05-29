@@ -67,7 +67,7 @@ function App() {
           {displayedItems.map((item) => (
             <div
               key={item.id}
-              className="border-2 border-gray-700 flex flex-col h-96 md:h-72 bg-gray-800 rounded-lg shadow-lg"
+              className="border-2 border-gray-700 flex flex-col h-80 sm:h-64 md:h-72 bg-gray-800 rounded-lg shadow-lg"
             >
               <div className="h-[50%]">
                 <img
