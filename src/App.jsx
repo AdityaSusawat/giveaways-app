@@ -2,15 +2,7 @@ import { useEffect, useState } from "react";
 import QuestionSVG from "./assets/QuestionSVG";
 import Modal from "./components/Modal";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./components/ui/select";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import Navbar from "./components/Navbar";
 
 function App() {
   const [data, setData] = useState([]);
@@ -92,20 +84,29 @@ function App() {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-900 text-gray-100">
-      <div className="flex-grow p-4">
+      <Navbar />
+      <div className="flex-grow p-4 mt-16">
+        {/* If loading */}
         {loading && <p>Loading...</p>}
+
+        {/* If error */}
         {error && <p>{error.message}</p>}
+
+        {/* If no items */}
         {!loading && !error && displayedItems.length === 0 && (
           <p>No items available</p>
         )}
+
+        {/* Main */}
         <div className="flex">
-          <div className="hidden w-56 lg:flex flex-col border-2 fixed top-4 left-4 h-96 bg-gray-800 rounded-lg items-center">
+          {/* Filters and search */}
+          <div className="hidden w-56 lg:flex flex-col border-2 fixed top-18 left-4 h-96 bg-gray-800 rounded-lg items-center">
             <p className="font-bold mb-4 mt-4 text-3xl">Filters</p>
             {/* Type */}
-            <div className="mb-2">
-              <label>TYPE:</label>
+            <div className="mb-4 px-5">
+              <label className="font-semibold text-gray-100 mb-1">TYPE:</label>
               <div className="mt-2">
-                <div className="mb-2">
+                <div className="mb-2 flex items-center">
                   <input
                     type="radio"
                     name="type"
@@ -113,10 +114,13 @@ function App() {
                     value="game"
                     checked={type === "game"}
                     onChange={handleTypeChange}
+                    className="form-radio text-blue-500 bg-gray-800 border-gray-600 focus:ring-blue-500"
                   />
-                  <label htmlFor="game">Game</label>
+                  <label htmlFor="game" className="ml-2 text-gray-100">
+                    Game
+                  </label>
                 </div>
-                <div className="mb-2">
+                <div className="mb-2 flex items-center">
                   <input
                     type="radio"
                     name="type"
@@ -124,10 +128,13 @@ function App() {
                     value="loot"
                     checked={type === "loot"}
                     onChange={handleTypeChange}
+                    className="form-radio text-blue-500 bg-gray-800 border-gray-600 focus:ring-blue-500"
                   />
-                  <label htmlFor="loot">Loot</label>
+                  <label htmlFor="loot" className="ml-2 text-gray-100">
+                    Loot
+                  </label>
                 </div>
-                <div className="mb-2">
+                <div className="mb-2 flex items-center">
                   <input
                     type="radio"
                     name="type"
@@ -135,67 +142,30 @@ function App() {
                     value="beta"
                     checked={type === "beta"}
                     onChange={handleTypeChange}
+                    className="form-radio text-blue-500 bg-gray-800 border-gray-600 focus:ring-blue-500"
                   />
-                  <label htmlFor="beta">Beta</label>
+                  <label htmlFor="beta" className="ml-2 text-gray-100">
+                    Beta
+                  </label>
                 </div>
               </div>
-              {/* <RadioGroup
-                value={type}
-                onChange={handleTypeChange}
-                className="mt-2"
-              >
-                <div className="mb-2">
-                  <RadioGroupItem
-                    type="radio"
-                    name="type"
-                    id="game"
-                    value="game"
-                    checked={type === "game"}
-                  />
-                  <Label htmlFor="game">Game</Label>
-                </div>
-                <div className="mb-2">
-                  <RadioGroupItem
-                    type="radio"
-                    name="type"
-                    id="loot"
-                    value="loot"
-                    checked={type === "loot"}
-                  />
-                  <Label htmlFor="loot">Loot</Label>
-                </div>
-                <div className="mb-2">
-                  <RadioGroupItem
-                    type="radio"
-                    name="type"
-                    id="beta"
-                    value="beta"
-                    checked={type === "beta"}
-                  />
-                  <Label htmlFor="beta">Beta</Label>
-                </div>
-              </RadioGroup> */}
             </div>
+
             {/* Sort by */}
-            <div className="mb-2 flex flex-col">
-              <label className="font-semibold">SORT BY:</label>
-              <select value={sortBy} onChange={handleSortByChange}>
+            <div className="mb-4 flex flex-col">
+              <label className="font-semibold text-gray-100 mb-1">
+                SORT BY:
+              </label>
+              <select
+                value={sortBy}
+                onChange={handleSortByChange}
+                className="bg-gray-800 text-gray-100 border border-gray-600 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              >
                 <option value="">Any</option>
                 <option value="popularity">Popularity</option>
                 <option value="value">Value</option>
                 <option value="end_date">End Date</option>
               </select>
-              {/* <Select value={sortBy} onValueChange={handleSortByChange}>
-                <SelectTrigger className="w-[180px] text-red-500">
-                  <SelectValue placeholder="Sort by" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="any">Any</SelectItem>
-                  <SelectItem value="popularity">Popularity</SelectItem>
-                  <SelectItem value="value">Value</SelectItem>
-                  <SelectItem value="end_date">End Date</SelectItem>
-                </SelectContent>
-              </Select> */}
             </div>
             {/* Platform */}
             {/* <div>
@@ -242,11 +212,13 @@ function App() {
             {/* Search */}
             <button
               onClick={handleApplyFilters}
-              className="mt-4 p-2 bg-blue-500 hover:bg-blue-700 text-white rounded transition-colors duration-200"
+              className="mt-4 p-2 px-8 bg-blue-500 hover:bg-blue-700 text-white rounded transition-colors duration-200"
             >
               Search
             </button>
           </div>
+
+          {/* Items */}
           <div className="flex-grow lg:ml-60">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {displayedItems.map((item) => (
