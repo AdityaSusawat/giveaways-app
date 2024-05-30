@@ -5,6 +5,7 @@ import Modal from "./components/Modal";
 import cat from "./assets/cat.png";
 
 import Navbar from "./components/Navbar";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   const [data, setData] = useState([]);
@@ -228,19 +229,21 @@ function App() {
                 <img src={cat} alt="sos" className="h-36" />
               </div>
               <p className="text-gray-100 mb-4">
-                Help a brother out by referring me to frontend/fullstack roles
-                in your company.
+                Help a brother out by referring me to any frontend/fullstack
+                roles in your company.
               </p>
               <a
                 href="https://www.linkedin.com/in/adityasusawat/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200"
+                className="inline-block bg-blue-500 text-white text-center px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200"
               >
                 My LinkedIn Profile
               </a>
             </div>
           </div>
+
+          <ScrollToTop />
 
           {/* Items */}
           <div className="flex-grow lg:ml-60">
