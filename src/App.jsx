@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import QuestionSVG from "./assets/QuestionSVG";
 import Modal from "./components/Modal";
 
+import cat from "./assets/cat.png";
+
 import Navbar from "./components/Navbar";
 
 function App() {
@@ -70,9 +72,9 @@ function App() {
     setSortBy(event.target.value);
   };
 
-  const handlePlatform = (event) => {
-    setPlatform(event.target.value);
-  };
+  // const handlePlatform = (event) => {
+  //   setPlatform(event.target.value);
+  // };
 
   const handleApplyFilters = () => {
     let newQuery = ``;
@@ -100,7 +102,7 @@ function App() {
         {/* Main */}
         <div className="flex">
           {/* Filters and search */}
-          <div className="hidden w-56 lg:flex flex-col border-2 fixed top-18 left-4 h-96 bg-gray-800 rounded-lg items-center">
+          <div className="hidden border-2 border-gray-700 w-56 lg:flex flex-col fixed top-18 left-4 h-96 bg-gray-800 rounded-lg items-center">
             <p className="font-bold mb-4 mt-4 text-3xl">Filters</p>
             {/* Type */}
             <div className="mb-4 px-5">
@@ -218,6 +220,28 @@ function App() {
             </button>
           </div>
 
+          {/* Support banner */}
+          <div className="hidden border-2 border-gray-700 w-56 lg:flex flex-col fixed top-[30rem] left-4 h-[26rem] bg-gray-800 rounded-lg items-center">
+            <p className="font-bold mt-4 text-xl">SUPPORT</p>
+            <div className="px-5 flex flex-col gap-y-4  mt-4">
+              <div className="flex justify-center">
+                <img src={cat} alt="sos" className="h-36" />
+              </div>
+              <p className="text-gray-100 mb-4">
+                Help a brother out by referring me to frontend/fullstack roles
+                in your company.
+              </p>
+              <a
+                href="https://www.linkedin.com/in/adityasusawat/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200"
+              >
+                My LinkedIn Profile
+              </a>
+            </div>
+          </div>
+
           {/* Items */}
           <div className="flex-grow lg:ml-60">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -268,7 +292,7 @@ function App() {
               <div className="flex justify-center mt-4">
                 <button
                   onClick={handleLoadMore}
-                  className="mt-4 p-2 bg-blue-500 hover:bg-blue-700 text-white rounded transition-colors duration-200"
+                  className="p-2 px-6 bg-blue-500 hover:bg-blue-700 text-white rounded transition-colors duration-200"
                 >
                   Load More
                 </button>
