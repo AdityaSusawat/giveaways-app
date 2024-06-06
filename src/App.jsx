@@ -89,20 +89,9 @@ function App() {
     <div className="flex flex-col min-h-screen bg-gray-900 text-gray-100">
       <Navbar />
       <div className="flex-grow p-4 mt-16">
-        {/* If loading */}
-        {loading && <p>Loading...</p>}
-
-        {/* If error */}
-        {error && <p>{error.message}</p>}
-
-        {/* If no items */}
-        {!loading && !error && displayedItems.length === 0 && (
-          <p>No items available</p>
-        )}
-
-        {/* Main */}
+        {/* Filters */}
         <div className="flex">
-          {/* Filters and search */}
+          {/* PC filters and search */}
           <div className="hidden border-2 border-gray-700 w-56 lg:flex flex-col fixed top-18 left-4 h-96 bg-gray-800 rounded-lg items-center">
             <p className="font-bold mb-4 mt-4 text-3xl">Filters</p>
             {/* Type */}
@@ -221,87 +210,179 @@ function App() {
             </button>
           </div>
 
-          {/* Support banner */}
-          <div className="hidden border-2 border-gray-700 w-56 lg:flex flex-col fixed top-[30rem] left-4 h-[26rem] bg-gray-800 rounded-lg items-center">
-            <p className="font-bold mt-4 text-xl">SUPPORT</p>
-            <div className="px-5 flex flex-col gap-y-4  mt-4">
-              <div className="flex justify-center">
-                <img src={cat} alt="sos" className="h-36" />
+          {/* Mobile filters and search */}
+          <div className="flex flex-col lg:hidden w-full mb-6">
+            {/* Type */}
+            <div className="flex gap-x-6 py-2 items-center">
+              <label className="font-semibold text-gray-100 mb-1 text-center flex items-center">
+                TYPE:
+              </label>
+              <div className="grid grid-cols-3 items-center">
+                <div className="flex px-4">
+                  <input
+                    type="radio"
+                    name="type"
+                    id="game"
+                    value="game"
+                    checked={type === "game"}
+                    onChange={handleTypeChange}
+                    className="form-radio text-blue-500 bg-gray-800 border-gray-600 focus:ring-blue-500"
+                  />
+                  <label htmlFor="game" className="ml-2 text-gray-100">
+                    Game
+                  </label>
+                </div>
+                <div className="flex px-4">
+                  <input
+                    type="radio"
+                    name="type"
+                    id="loot"
+                    value="loot"
+                    checked={type === "loot"}
+                    onChange={handleTypeChange}
+                    className="form-radio text-blue-500 bg-gray-800 border-gray-600 focus:ring-blue-500"
+                  />
+                  <label htmlFor="loot" className="ml-2 text-gray-100">
+                    Loot
+                  </label>
+                </div>
+                <div className="flex px-4">
+                  <input
+                    type="radio"
+                    name="type"
+                    id="beta"
+                    value="beta"
+                    checked={type === "beta"}
+                    onChange={handleTypeChange}
+                    className="form-radio text-blue-500 bg-gray-800 border-gray-600 focus:ring-blue-500"
+                  />
+                  <label htmlFor="beta" className="ml-2 text-gray-100">
+                    Beta
+                  </label>
+                </div>
               </div>
-              <p className="text-gray-100 mb-4">
-                Help a brother out by referring me to any frontend/fullstack
-                roles in your company.
-              </p>
-              <a
-                href="https://www.linkedin.com/in/adityasusawat/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block bg-blue-500 text-white text-center px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200"
+            </div>
+
+            <div className="flex content-center gap-x-4 items-center">
+              {/* Sort by */}
+              <div className="flex flex-col">
+                <label className="font-semibold text-gray-100 mb-1">
+                  SORT BY:
+                </label>
+                <select
+                  value={sortBy}
+                  onChange={handleSortByChange}
+                  className="bg-gray-800 text-gray-100 border border-gray-600 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option value="">Any</option>
+                  <option value="popularity">Popularity</option>
+                  <option value="value">Value</option>
+                  <option value="end_date">End Date</option>
+                </select>
+              </div>
+
+              {/* Search */}
+              <button
+                onClick={handleApplyFilters}
+                className="p-2 px-8 self-end bg-blue-500 hover:bg-blue-700 text-white rounded transition-colors duration-200"
               >
-                My LinkedIn Profile
-              </a>
+                Search
+              </button>
             </div>
           </div>
+        </div>
 
-          <ScrollToTop />
+        {/* Support banner */}
+        <div className="hidden border-2 border-gray-700 w-56 lg:flex flex-col fixed top-[30rem] left-4 h-[26rem] bg-gray-800 rounded-lg items-center">
+          <p className="font-bold mt-4 text-xl">SUPPORT</p>
+          <div className="px-5 flex flex-col gap-y-4  mt-4">
+            <div className="flex justify-center">
+              <img src={cat} alt="sos" className="h-36" />
+            </div>
+            <p className="text-gray-100 mb-4">
+              Help a brother out by referring me to any frontend/fullstack roles
+              in your company.
+            </p>
+            <a
+              href="https://www.linkedin.com/in/adityasusawat/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-blue-500 text-white text-center px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200"
+            >
+              My LinkedIn Profile
+            </a>
+          </div>
+        </div>
 
-          {/* Items */}
-          <div className="flex-grow lg:ml-60">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {displayedItems.map((item) => (
-                <div
-                  key={item.id}
-                  className="border-2 border-gray-700 flex flex-col h-80 sm:h-64 md:h-72 bg-gray-800 rounded-lg shadow-lg"
-                >
-                  <div className="h-[50%]">
-                    <img
-                      src={item.image}
-                      alt={`img${item.id}`}
-                      className="w-full h-full rounded-t-lg"
-                    />
-                  </div>
-                  <div className="h-full flex flex-col justify-between p-2">
-                    <div className="font-medium">{item.title}</div>
-                    <div className="flex justify-between items-center mb-3 pr-2 pl-2">
-                      <div className="flex gap-x-4">
-                        <a
-                          href={item.open_giveaway_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="bg-blue-500 hover:bg-blue-700 p-1 pr-2 pl-2 rounded-sm text-lg text-white transition-colors duration-200"
-                        >
-                          CLAIM
-                        </a>
-                        <div
-                          className="cursor-pointer content-center"
-                          onClick={() => handleQuestion(item.id)}
-                        >
-                          <QuestionSVG
-                            color="#97E333"
-                            size="32"
-                            className="hidden md:flex"
-                          />
-                        </div>
+        <ScrollToTop />
+
+        {/* If loading */}
+        {loading && <p>Loading...</p>}
+
+        {/* If no items */}
+        {!loading && !error && displayedItems.length === 0 && (
+          <p>No items available</p>
+        )}
+
+        {/* If error */}
+        {error && <p className="">{error.message}</p>}
+
+        {/* Items */}
+        <div className="flex-grow lg:ml-60">
+          <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {displayedItems.map((item) => (
+              <li
+                key={item.id}
+                className="border-2 border-gray-700 flex flex-col h-80 sm:h-64 md:h-72 bg-gray-800 rounded-lg shadow-lg"
+              >
+                <div className="h-[50%]">
+                  <img
+                    src={item.image}
+                    alt={`img${item.id}`}
+                    className="w-full h-full rounded-t-lg"
+                  />
+                </div>
+                <div className="h-full flex flex-col justify-between p-2">
+                  <div className="font-medium">{item.title}</div>
+                  <div className="flex justify-between items-center mb-3 pr-2 pl-2">
+                    <div className="flex gap-x-4">
+                      <a
+                        href={item.open_giveaway_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-blue-500 hover:bg-blue-700 p-1 pr-2 pl-2 rounded-sm text-lg text-white transition-colors duration-200"
+                      >
+                        CLAIM
+                      </a>
+                      <div
+                        className="cursor-pointer content-center"
+                        onClick={() => handleQuestion(item.id)}
+                      >
+                        <QuestionSVG
+                          color="#97E333"
+                          size="32"
+                          className="hidden md:flex"
+                        />
                       </div>
-                      <div className="hidden md:flex font-bold text-2xl">
-                        {item.worth === "N/A" ? "" : item.worth}
-                      </div>
+                    </div>
+                    <div className="hidden md:flex font-bold text-2xl">
+                      {item.worth === "N/A" ? "" : item.worth}
                     </div>
                   </div>
                 </div>
-              ))}
+              </li>
+            ))}
+          </ul>
+          {!loading && !error && displayedItems.length < data.length && (
+            <div className="flex justify-center mt-4">
+              <button
+                onClick={handleLoadMore}
+                className="p-2 px-6 bg-blue-500 hover:bg-blue-700 text-white rounded transition-colors duration-200"
+              >
+                Load More
+              </button>
             </div>
-            {!loading && !error && displayedItems.length < data.length && (
-              <div className="flex justify-center mt-4">
-                <button
-                  onClick={handleLoadMore}
-                  className="p-2 px-6 bg-blue-500 hover:bg-blue-700 text-white rounded transition-colors duration-200"
-                >
-                  Load More
-                </button>
-              </div>
-            )}
-          </div>
+          )}
         </div>
       </div>
       <Modal

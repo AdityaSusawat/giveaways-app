@@ -1,7 +1,7 @@
 # Gaming Giveaway Tracker
 
-**Gaming Giveaway Tracker** is a web application designed to aggregate and display the latest gaming giveaways available on the internet. It covers a wide range of freebies including games, downloadable content (DLCs), and digital currencies from various online platforms.
-**Gaming Giveaway Tracker**: bit.ly/giveaways-tracker
+**Gaming Giveaway Tracker** is a web application designed to aggregate and display the latest gaming giveaways available on the internet. It covers a wide range of freebies including games, downloadable content (DLCs), and digital currencies from various online platforms.  
+**Hosted Link**: [bit.ly/giveaways-tracker](bit.ly/giveaways-tracker)
 
 ## Features
 
